@@ -1,0 +1,91 @@
+{
+  "entities": {
+    "Task": {
+      "collectionName": "tasks",
+      "fields": {
+        "taskId": { "type": "string" },
+        "sourceSystem": { "type": "string" },
+        "taskType": { "type": "string" },
+        "description": { "type": "string" },
+        "priority": { "type": "string" },
+        "status": { "type": "string" },
+        "substatus": { "type": "string" },
+        "assigneeId": { "type": "string" },
+        "assigneeName": { "type": "string" },
+        "teamId": { "type": "string" },
+        "teamName": { "type": "string" },
+        "relatedObjectType": { "type": "string" },
+        "relatedObjectId": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "dueAt": { "type": "string" },
+        "completionNote": { "type": "string" },
+        "holdReason": { "type": "string" },
+        "isLocallyModified": { "type": "boolean" },
+        "hasConflict": { "type": "boolean" },
+        "version": { "type": "number" },
+        "lastImportBatchId": { "type": "string" },
+        "lastImportedAt": { "type": "string" }
+      }
+    },
+    "User": {
+      "collectionName": "users",
+      "fields": {
+        "userId": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string" },
+        "teamId": { "type": "string" },
+        "teamName": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      }
+    },
+    "ImportBatch": {
+      "collectionName": "importBatches",
+      "fields": {
+        "batchId": { "type": "string" },
+        "filename": { "type": "string" },
+        "importedBy": { "type": "string" },
+        "importedAt": { "type": "string" },
+        "totalRows": { "type": "number" },
+        "acceptedRows": { "type": "number" },
+        "rejectedRows": { "type": "number" },
+        "duplicateRows": { "type": "number" },
+        "warningCount": { "type": "number" },
+        "result": { "type": "string" }
+      }
+    },
+    "TaskAuditLog": {
+      "collectionName": "taskAuditLogs",
+      "fields": {
+        "eventId": { "type": "string" },
+        "taskId": { "type": "string" },
+        "actorId": { "type": "string" },
+        "actorName": { "type": "string" },
+        "action": { "type": "string" },
+        "previousStatus": { "type": "string" },
+        "newStatus": { "type": "string" },
+        "reason": { "type": "string" },
+        "timestamp": { "type": "string" },
+        "result": { "type": "string" },
+        "correlationId": { "type": "string" },
+        "source": { "type": "string" }
+      }
+    },
+    "AiActionRequest": {
+      "collectionName": "aiActionRequests",
+      "fields": {
+        "requestId": { "type": "string" },
+        "userId": { "type": "string" },
+        "taskId": { "type": "string" },
+        "proposedAction": { "type": "string" },
+        "taskVersion": { "type": "number" },
+        "confirmationState": { "type": "string" },
+        "executionState": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "expiresAt": { "type": "string" }
+      }
+    }
+  }
+}

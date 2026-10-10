@@ -1,0 +1,6 @@
+{
+  "name": "CCS To Do AI Manager",
+  "description": "File-driven operations MVP for Oracle Utilities CCS To Do task queues with file import, lifecycle state machine, audit logging, and human-in-the-loop Gemini assistant.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

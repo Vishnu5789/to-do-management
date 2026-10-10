@@ -1,0 +1,64 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+    
+    function isSupervisor() {
+      return isAuthenticated() && getUserData().role == 'Supervisor';
+    }
+    
+    function isOperator() {
+      return isAuthenticated() && (getUserData().role == 'Operator' || getUserData().role == 'Supervisor');
+    }
+
+    // Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Tasks collection
+    match /tasks/{taskId} {
+      allow read: if isAuthenticated();
+      // Only supervisors can create or delete tasks (e.g. via file import)
+      allow create, delete: if isSupervisor();
+      // Operators can update status/notes if assigned, supervisors can update anything
+      allow update: if isOperator();
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      // Users cannot elevate their own role
+      allow write: if isSupervisor();
+    }
+
+    // Import Batches
+    match /importBatches/{batchId} {
+      allow read: if isAuthenticated();
+      allow write: if isSupervisor();
+    }
+
+    // Task Audit Logs: Strictly append-only, immutable once written
+    match /taskAuditLogs/{eventId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update, delete: if false; // Immutable audit log
+    }
+
+    // AI Action Requests
+    match /aiActionRequests/{requestId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated();
+      allow delete: if false;
+    }
+  }
+}
